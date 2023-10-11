@@ -17,10 +17,12 @@ export default function Header() {
                 <h1 className='font-bold'>QUIZ</h1>
               </Link>
             </div>
-            <div className='w-1/4'>
-              <Link href="/" className="hover:text-white hover:text-lg transition text-right">
+            <div className='w-1/4 flex justify-end'>
+             
+              <Link href="/" className=" hover:text-white hover:text-lg transition">
                 <h1>Sign-in</h1>
               </Link>
+             
             </div>
         </nav>
         
