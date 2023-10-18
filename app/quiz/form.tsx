@@ -47,7 +47,7 @@ export function QuestionForm() {
     <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
         {quiz.map((item, index) => (   
-            <div>
+            <div key={item.id}>
                 <FormField
                 control={form.control}
                 name="type"
@@ -61,14 +61,14 @@ export function QuestionForm() {
                         className="flex flex-col space-y-1"
                         >
                             {item.incorrectAnswers.map((choice, index) => (
-                                <FormItem className="flex items-center space-x-3 space-y-0">
-                                <FormControl>
-                                    <RadioGroupItem value={choice} />
-                                </FormControl>
-                                <FormLabel className="font-normal">
-                                    {choice}
-                                </FormLabel>
-                            </FormItem>
+                                <FormItem key={index} className="flex items-center space-x-3 space-y-0">
+                                    <FormControl>
+                                        <RadioGroupItem value={choice} />
+                                    </FormControl>
+                                    <FormLabel className="font-normal">
+                                        {choice}
+                                    </FormLabel>
+                                </FormItem>
                             ) )}
                         
                     </RadioGroup>
