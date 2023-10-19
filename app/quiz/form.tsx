@@ -64,7 +64,7 @@ export function QuestionForm() {
                         defaultValue={field.value}
                         className="flex flex-col space-y-1"
                         >
-                            {quizItem.choices.map((choice, index) => (
+                            {quizItem.choices.map((choice:string, index:number) => (
                                 <FormItem key={index} className="flex items-center space-x-3 space-y-0">
                                     <FormControl>
                                         <RadioGroupItem value={choice} />
