@@ -19,8 +19,17 @@ import { toast } from "@/components/ui/use-toast"
 import shuffleArray from '@/utils/shuffleArray'
  
 const FormSchema = z.object({
-  type: z.enum(["all", "mentions", "none"], {
-    required_error: "You need to select a notification type.",
+  q1:z.string({
+    required_error: "You need to select an answer.",
+  }),
+  q2:z.string({
+    required_error: "You need to select an answer.",
+  }),
+  q3:z.string({
+    required_error: "You need to select an answer.",
+  }),
+  q4:z.string({
+    required_error: "You need to select an answer.",
   }),
 })
 
@@ -29,7 +38,6 @@ const quizItems = shuffleArray(quiz.map(item => ({
   choices: shuffleArray([...item.incorrectAnswers, item.correctAnswer])
 })))
 
-console.log(quizItems)
  
 export function QuestionForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -37,6 +45,7 @@ export function QuestionForm() {
   })
  
   function onSubmit(data: z.infer<typeof FormSchema>) {
+    
     toast({
       title: "You submitted the following values:",
       description: (
@@ -49,41 +58,38 @@ export function QuestionForm() {
  
   return (
     <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
         {quizItems.map((quizItem, index) => (   
-            <div key={quizItem.id}>
-                <FormField
-                control={form.control}
-                name="type"
-                render={({ field }) => (
+          <div key={quizItem.id}>
+            <FormField
+              control={form.control}
+              name={quizItem.id}
+              render={({ field }) => (
                 <FormItem className="space-y-3">
-                    <FormLabel>{index +1 }. {quizItem.question}</FormLabel>
-                    <FormControl>
-                        <RadioGroup
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                        className="flex flex-col space-y-1"
-                        >
-                            {quizItem.choices.map((choice:string, index:number) => (
-                                <FormItem key={index} className="flex items-center space-x-3 space-y-0">
-                                    <FormControl>
-                                        <RadioGroupItem value={choice} />
-                                    </FormControl>
-                                    <FormLabel className="font-normal">
-                                        {choice}
-                                    </FormLabel>
-                                </FormItem>
-                            ) )}
-                        
+                  <FormLabel>{index +1 }. {quizItem.question}</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    className="flex flex-col space-y-1"
+                    >
+                      {quizItem.choices.map((choice:string, index:number) => (
+                        <FormItem key={index} className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value={choice} />
+                          </FormControl>
+                          <FormLabel className="font-normal">
+                            {choice}
+                          </FormLabel>
+                        </FormItem>
+                      ))}
                     </RadioGroup>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        
-        />
-            </div>     
-            
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}     
+            />
+          </div>        
         ))}
         <Button type="submit">Submit</Button>
       </form>
