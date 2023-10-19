@@ -46,8 +46,6 @@ export function QuestionForm() {
       ),
     })
   }
-
-  
  
   return (
     <Form {...form}>
