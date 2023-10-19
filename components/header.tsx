@@ -13,13 +13,13 @@ export default function Header() {
               <h1 className='hidden md:block ml-[5px]'>Primus Private Security Training Institute</h1>
             </div>
             <div>
-              <Link href="/quiz" className="hover:text-white hover:text-lg transition text-center">
+              <Link href="/quiz" className="hover:text-lg transition text-center">
                 <h1 className='font-bold'>QUIZ</h1>
               </Link>
             </div>
             <div className='w-1/4 flex justify-end'>
              
-              <Link href="/" className=" hover:text-white hover:text-lg transition">
+              <Link href="/" className="hover:text-lg transition">
                 <h1>Sign-in</h1>
               </Link>
              

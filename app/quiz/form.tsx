@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { toast } from "@/components/ui/use-toast"
+import shuffleArray from '@/utils/shuffleArray'
  
 const FormSchema = z.object({
   type: z.enum(["all", "mentions", "none"], {
@@ -23,7 +24,12 @@ const FormSchema = z.object({
   }),
 })
 
+const quizItems = shuffleArray(quiz.map(item => ({
+  ...item,
+  choices: shuffleArray([...item.incorrectAnswers, item.correctAnswer])
+})))
 
+console.log(quizItems)
  
 export function QuestionForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -46,21 +52,21 @@ export function QuestionForm() {
   return (
     <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
-        {quiz.map((item, index) => (   
-            <div key={item.id}>
+        {quizItems.map((quizItem, index) => (   
+            <div key={quizItem.id}>
                 <FormField
                 control={form.control}
                 name="type"
                 render={({ field }) => (
                 <FormItem className="space-y-3">
-                    <FormLabel>{index +1 }. {item.question}</FormLabel>
+                    <FormLabel>{index +1 }. {quizItem.question}</FormLabel>
                     <FormControl>
                         <RadioGroup
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                         className="flex flex-col space-y-1"
                         >
-                            {item.incorrectAnswers.map((choice, index) => (
+                            {quizItem.choices.map((choice, index) => (
                                 <FormItem key={index} className="flex items-center space-x-3 space-y-0">
                                     <FormControl>
                                         <RadioGroupItem value={choice} />
